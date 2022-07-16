@@ -1,5 +1,6 @@
 # dns-resolver
 A simple implementation of a DNS resolver in C++ for Linux environment.
+
 Given a hostname `www.google.ca`, make a DNS query to a DNS server to retrieve network information about the hostname.
 
 Resources:
@@ -9,6 +10,6 @@ Resources:
 
 Todo:
 - [ ] Prototyping with a hardcoded packet to a dns server.
+- [ ] Include a build system to the repo. Probably CMake? or just Makefiles?
 - [ ] Create an initial design
 - [ ] Create tasks
-- [ ] Profit!
