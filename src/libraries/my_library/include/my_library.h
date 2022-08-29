@@ -1,2 +1,2 @@
-void initialize();
-void terminate();
+int initialize();
+int terminate();

@@ -2,10 +2,12 @@
 
 #include "my_library.h"
 
-void initialize() {
+int initialize() {
     std::cout << "my_library is initiated\n";
+    return 1;
 }
 
-void terminate() {
+int terminate() {
     std::cout << "my_library is terminated\n";
+    return 1;
 }
