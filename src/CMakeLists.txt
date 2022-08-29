@@ -15,6 +15,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
 configure_file(project_config.h.in project_config.h)
 list(APPEND incDirs ${PROJECT_BINARY_DIR}) 
 
+# Add libraries
+add_subdirectory(libraries)
+
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_directories(${PROJECT_NAME} PRIVATE ${libDirs} ${optionalLibDirs})
 target_include_directories(${PROJECT_NAME} PUBLIC ${incDirs} ${optionalIncDirs})
