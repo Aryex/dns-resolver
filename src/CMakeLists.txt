@@ -9,6 +9,9 @@ set(optionalIncDirs "")
 set(libs "")
 set(optionalLibs "")
 
+# To allow include library_directories.cmake in this project
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
+
 configure_file(project_config.h.in project_config.h)
 list(APPEND incDirs ${PROJECT_BINARY_DIR}) 
 
