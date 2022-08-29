@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "my_library.h";
+#include "my_library.h"
 
 void initialize() {
     std::cout << "my_library is initiated\n";
