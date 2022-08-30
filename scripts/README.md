@@ -1,0 +1,1 @@
+These scripts are executed assuming the current directory is the project root

@@ -1,0 +1,2 @@
+int initialize();
+int terminate();

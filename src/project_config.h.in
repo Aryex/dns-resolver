@@ -1,0 +1,9 @@
+// This is a CMake recipe module that helps transpire CMake configuration variables to C/CPP macros
+
+#define PROJECT_VERSION_MAJOR @dns_resolver_VERSION_MAJOR@
+#define PROJECT_VERSION_MINOR @dns_resolver_VERSION_MINOR@
+
+// To parse CMake build options use following directive
+// #cmakedefine <CMake config option>
+// e.g: #cmakedefine USE_LIBRARY_A
+
