@@ -39,10 +39,10 @@ int UDPSocket::sendTo(const struct sockaddr *target, const char *payload, int fl
     return result;
 }
 
-int UDPSocket::sendTo(const struct sockaddr *target, Packet *packet, int flags)
+int UDPSocket::sendTo(const struct sockaddr &target, Packet &packet, int flags)
 {
-    const char* payload = packet->getContent().c_str();
-    return UDPSocket::sendTo(target, payload);
+    const char* payload = packet.getContent().c_str();
+    return UDPSocket::sendTo(&target, payload);
 }
 
 Packet *UDPSocket::waitAndRecv(int flags)
@@ -64,9 +64,8 @@ Packet *UDPSocket::waitAndRecv(int flags)
     }
     this->buffer[recvLen] = '\0';
     string str(this->buffer, strlen(buffer));
-    cout << "got " << buffer << endl;
-    cout << "got this " << str << endl;
-    return new Packet(buffer, &from);
+    cout << "got " << str << endl;
+    return new Packet(buffer, from);
 }
 
 addrinfo *getAddrInfo(const char *hostname, uint16_t port, int sockType)
@@ -79,7 +78,6 @@ addrinfo *getAddrInfo(const char *hostname, uint16_t port, int sockType)
     hints.ai_socktype = sockType;
     hints.ai_flags = AI_PASSIVE; // let os decides the ip
 
-    // const char *portStr = to_string(htons(port)).c_str();
     const char *portStr = to_string(port).c_str();
 
     if ((status = getaddrinfo(hostname, portStr, &hints, &addrInfoResults)) != 0)
@@ -91,14 +89,7 @@ addrinfo *getAddrInfo(const char *hostname, uint16_t port, int sockType)
     return addrInfoResults;
 }
 
-/**
- * @brief create a UDPSocket at hostname:port
- *
- * @param hostname a string hostname
- * @param hostPort the port
- * @return UDPSocket&
- */
-UDPSocket &openUDPSocket(const char *hostname, uint16_t hostPort)
+UDPSocket *openUDPSocket(const char *hostname, uint16_t hostPort)
 {
     struct addrinfo *addrInfoResults = getAddrInfo(hostname, hostPort, SOCK_DGRAM);
 
@@ -140,6 +131,5 @@ UDPSocket &openUDPSocket(const char *hostname, uint16_t hostPort)
     }
 
     freeaddrinfo(addrInfoResults); // free the linked list
-    UDPSocket *ret = (new UDPSocket(socketFd));
-    return *ret;
+    return new UDPSocket(socketFd);
 }

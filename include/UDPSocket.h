@@ -31,7 +31,7 @@ public:
 
     int sendTo(const struct sockaddr *target, const char *payload, int flags = 0);
 
-    int sendTo(const struct sockaddr *target, Packet *packet, int flags = 0);
+    int sendTo(const struct sockaddr &target, Packet &packet, int flags = 0);
 
     Packet *waitAndRecv(int flags = MSG_WAITALL);
 
@@ -39,24 +39,25 @@ public:
 
     string toString() { return "UDPSocket(" + this->ipAddress + ":" + to_string(this->port) + ")"; }
 
-    // ~Destructor close(sockfd);
+    ~ UDPSocket() {this->closeSocket();}
 };
 
 /**
- * @brief Get the Addr Info object
+ * @brief Get the address information for the specified hostname, port, and socket type.
  *
  * @param hostname
  * @param port
  * @param sockType
- * @return addrinfo*
+ * @return Pointer to a addrinfo
  */
 addrinfo *getAddrInfo(const char *hostname, uint16_t port, int sockType = SOCK_DGRAM);
+
 
 /**
  * @brief create a UDPSocket at hostname:port
  *
  * @param hostname a string hostname
- * @param hostPort the port
- * @return UDPSocket&
+ * @param hostPort the port. If 0 then the system will assign a random port number
+ * @return A pointer to a UDPSocket
  */
-UDPSocket &openUDPSocket(const char *hostname, uint16_t hostPort);
+UDPSocket *openUDPSocket(const char *hostname, uint16_t hostPort);

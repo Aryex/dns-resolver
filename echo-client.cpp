@@ -10,22 +10,25 @@
 #include <cerrno>
 #include <cstring>
 #include "UDPSocket.h"
+#include <memory>
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-   UDPSocket udp = openUDPSocket("localhost", 35907);
-   cout << udp.toString() << endl;
+//    UDPSocket *udp = openUDPSocket("localhost", 35907);
+   unique_ptr<UDPSocket> udp(openUDPSocket("localhost", 35907));
+   cout << udp->toString() << endl;
 
    char ipstr[INET6_ADDRSTRLEN];
-   addrinfo *toAddr = getAddrInfo("localhost", 8088, SOCK_DGRAM);
+   unique_ptr<addrinfo> toAddr(getAddrInfo("localhost", 8088, SOCK_DGRAM));
    sockaddr *target = toAddr->ai_addr;
-    
-   udp.sendTo(target, "Catdog");
 
-   Packet *packet = udp.waitAndRecv();
+   udp->sendTo(target, "Catdog");
+
+   unique_ptr<Packet> packet(udp->waitAndRecv());
    cout << "Server said: " << packet->getContent() << endl;
-   udp.closeSocket();
+   udp->closeSocket();
+
    return 0;
 }
