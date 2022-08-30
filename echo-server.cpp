@@ -8,8 +8,8 @@ int main(int argc, char *argv[])
     cout << "Listening on " << socket.toString() << endl;
     struct sockaddr client;
     while(true){
-        char* msg = socket.waitAndRecv(&client);
-        socket.sendTo(&client, msg);
+        Packet* packet = socket.waitAndRecv();
+        socket.sendTo(packet->getSource(), packet);
     }
     
 }

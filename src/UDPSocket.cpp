@@ -39,6 +39,12 @@ int UDPSocket::sendTo(const struct sockaddr *target, const char *payload, int fl
     return result;
 }
 
+int UDPSocket::sendTo(const struct sockaddr *target, Packet *packet, int flags)
+{
+    const char* payload = packet->getContent().c_str();
+    return UDPSocket::sendTo(target, payload);
+}
+
 Packet *UDPSocket::waitAndRecv(int flags)
 {
     cout << "listening..." << endl;

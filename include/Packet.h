@@ -8,10 +8,10 @@ using namespace std;
 class Packet
 {
     string content;
-    sockaddr *source;
+    const sockaddr *source;
 
 public:
     Packet(char *content, sockaddr *source) : content{content}, source{source} {};
     string &getContent() { return this->content; }
-    sockaddr &getSource() { return *(this->source); }
+    const sockaddr *getSource() { return this->source; }
 };

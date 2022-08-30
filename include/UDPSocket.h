@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <cerrno>
 #include <string>
+#include <cstring>
 #include "Packet.h"
 
 const int BUFFER_SIZE = 500;
@@ -30,18 +31,16 @@ public:
 
     int sendTo(const struct sockaddr *target, const char *payload, int flags = 0);
 
+    int sendTo(const struct sockaddr *target, Packet *packet, int flags = 0);
+
     Packet *waitAndRecv(int flags = MSG_WAITALL);
 
     void closeSocket() { close(this->socketFd); }
 
-    string toString()
-    {
-        return "UDPSocket(" + this->ipAddress + ":" + to_string(this->port) + ")";
-    }
+    string toString() { return "UDPSocket(" + this->ipAddress + ":" + to_string(this->port) + ")"; }
 
     // ~Destructor close(sockfd);
 };
-
 
 /**
  * @brief Get the Addr Info object
