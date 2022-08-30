@@ -6,10 +6,12 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 
-using namespace std;
+#include "my_library.h"
 
 void resolveHostName(const char *hostname)
 {
+    using std::cout;
+    using std::endl;
    const hostent *result = gethostbyname(hostname);
    cout << "hostname: " << result->h_name << endl;
 
@@ -24,6 +26,12 @@ void resolveHostName(const char *hostname)
 
 int main(int argc, char *argv[])
 {
+    using std::cout; 
+    using std::endl;
+    
+    initialize();
+    terminate();
+
    if (argc < 2)
    {
       cout << "Please enter at least one hostname" << endl;

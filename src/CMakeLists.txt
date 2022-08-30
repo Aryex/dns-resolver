@@ -11,12 +11,16 @@ set(optionalLibs "")
 
 # To allow include library_directories.cmake in this project
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
+include(library_directories)
 
 configure_file(project_config.h.in project_config.h)
 list(APPEND incDirs ${PROJECT_BINARY_DIR}) 
 
 # Add libraries
 add_subdirectory(libraries)
+list(APPEND libs "${myLibraryTarget}")
+list(APPEND incDirs "${myLibraryIncDir}")
+list(APPEND libDirs "${myLibraryLinkDir}")
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_directories(${PROJECT_NAME} PRIVATE ${libDirs} ${optionalLibDirs})
@@ -24,7 +28,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${incDirs} ${optionalIncDirs})
 target_link_libraries(${PROJECT_NAME} ${libs} ${optionalLibs})
 
 string(COMPARE EQUAL "${CMAKE_BUILD_TYPE}" "DEBUG" isBuildDebug)
-message(STATUS ${CMAKE_BUILD_TYPE})
 if(isBuildDebug)
     include(CTest)
 endif()
